@@ -1,0 +1,1 @@
+"""ProjectHub AI application package."""

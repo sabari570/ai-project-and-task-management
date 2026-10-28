@@ -1,82 +1,63 @@
+
 # ProjectHub AI
 
-ProjectHub AI is an intelligent project and team management backend. The project is built task-by-task using the master plan in `docs/MASTER_PLAN.md`.
+ProjectHub AI is an intelligent project and team management backend, built task-by-task using `docs/MASTER_PLAN.md` as the source of truth.
 
 ## Current status
 
-- Current task: T001 — Create repository and learning docs
-- API implementation: not started (planned for T002)
-- Database and AI integrations: not started
+- Current task: T002 — Python environment and FastAPI hello world
+- Current functionality: root and health endpoints
+- Database, authentication, and AI integrations: not implemented yet
 
 ## Prerequisites
 
-- Python 3.12 or newer
 - Git
+- uv
+- Python 3.12 or newer (uv can install Python for you)
 
-## Initial setup
+Install uv: https://docs.astral.sh/uv/getting-started/installation/
 
-### 1. Create and enter the repository
+## Setup
 
-If you extracted this starter folder, enter the `ProjectHub_AI_T001` directory (or rename it to `projecthub-ai`).
-
-```bash
-cd projecthub-ai
-git init
-```
-
-### 2. Create a virtual environment
-
-macOS/Linux:
+Run these commands from the repository root:
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install -e ".[dev]"
+uv python install 3.12
+uv sync --extra dev
 ```
 
-Windows PowerShell:
+`uv sync --extra dev` creates `.venv` if needed, installs the application and development dependencies, and creates or updates `uv.lock`.
 
-```powershell
-py -3.12 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-python -m pip install -e ".[dev]"
-```
+You do not need to activate `.venv` manually when using `uv run`.
 
-T001 has no runtime application dependencies yet. The optional `dev` group provides pytest for future tests.
-
-## Project workflow
-
-1. Read the task and dependencies in `docs/MASTER_PLAN.md`.
-2. Implement only the current task.
-3. Run the documented verification commands.
-4. Update `docs/TASK_TRACKER.md` with what was actually verified.
-5. Commit the task as a small, focused Git commit.
-6. Do not mark a task `DONE` until its acceptance criteria and tests are verified.
-
-## Task status vocabulary
-
-- `NOT STARTED`
-- `IN PROGRESS`
-- `IMPLEMENTED — NOT VERIFIED`
-- `BLOCKED`
-- `DONE`
-
-## Useful commands
+## Run the API
 
 ```bash
-git status
-git add README.md .gitignore pyproject.toml docs/MASTER_PLAN.md docs/TASK_TRACKER.md
-git commit -m "T001: create repository and learning docs"
-python -m pytest
+uv run uvicorn app.main:app --reload
 ```
 
-`python -m pytest` may report that no tests were collected in T001 because this task does not introduce application behavior or tests. Do not interpret that as a passing test suite. T002 introduces the first application behavior.
+Open these URLs:
 
-## Documentation
+- Root: http://127.0.0.1:8000/
+- Health: http://127.0.0.1:8000/health
+- Swagger UI: http://127.0.0.1:8000/docs
+- OpenAPI JSON: http://127.0.0.1:8000/openapi.json
 
-- `docs/MASTER_PLAN.md` — full project source of truth and roadmap.
-- `docs/TASK_TRACKER.md` — current task checkpoint.
+Stop the server with Ctrl+C.
 
-Never commit `.env`, credentials, virtual environments, caches, or local database files.
+## Run tests
+
+```bash
+uv run pytest
+```
+
+## Task workflow
+
+1. Read the current task in `docs/MASTER_PLAN.md`.
+2. Implement only that task.
+3. Run its verification commands and tests.
+4. Update `docs/TASK_TRACKER.md` with actual results.
+5. Commit the verified changes.
+6. Mark a task DONE only when its acceptance criteria are verified.
+
+Never commit credentials, `.env` files, virtual environments, caches, or local databases.
