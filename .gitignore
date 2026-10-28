@@ -1,0 +1,54 @@
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+.secret*
+
+# Python bytecode and environments
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+ENV/
+.python-version.local
+
+# Packaging/build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+wheels/
+
+# Test, coverage, and type-check caches
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.mypy_cache/
+.pyright/
+.ruff_cache/
+.tox/
+.nox/
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local databases and database exports
+*.db
+*.sqlite
+*.sqlite3
+*.dump
+*.sql.gz
+
+# Logs and temporary files
+*.log
+tmp/
+temp/
