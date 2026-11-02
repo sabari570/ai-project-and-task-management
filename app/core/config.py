@@ -3,12 +3,20 @@
 from functools import lru_cache
 from typing import Literal
 
-from pydantic import Field, SecretStr, model_validator
+from pydantic import SecretStr, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
     """Typed configuration for ProjectHub AI."""
+    
+    app_env: str = "development"
+
+    postgres_db: str = "projecthub"
+    postgres_user: str = "projecthub_user"
+    postgres_password: str
+
+    database_url: str
 
     model_config = SettingsConfigDict(
         env_file=".env",
