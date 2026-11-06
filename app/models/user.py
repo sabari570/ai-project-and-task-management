@@ -80,4 +80,4 @@ class User(Base):
     @validates("email")
     def normalize_email(self, key: str, value: str) -> str:
         """Normalize email whenever it is assigned through the ORM."""
-        return value.strip.lower()
+        return value.strip().lower()
