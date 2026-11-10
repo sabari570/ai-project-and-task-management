@@ -65,3 +65,63 @@ Do not create or modify database tables automatically
 when the FastAPI application starts.
 
 Use Alembic migration commands to manage schema changes.
+
+
+## T014 — CRUD Services and Transaction Boundaries
+
+### 1. Application layers
+
+- API routes handle HTTP requests, validation and HTTP responses.
+- Services contain business operations and database transaction logic.
+- SQLAlchemy models represent database tables.
+- The database session dependency creates and closes request sessions.
+
+### 2. CRUD operations
+
+CRUD means:
+
+- Create: insert a record.
+- Read: retrieve a record.
+- Update: modify a record.
+- Delete: remove a record.
+
+The User service implements these operations.
+
+### 3. Transaction management
+
+A transaction groups database operations into one coherent unit.
+
+- Commit saves successful changes.
+- Rollback cancels uncommitted changes after failure.
+- A failed database write must not leave a partially applied operation.
+
+### 4. Session management
+
+The get_db dependency creates one session per request.
+
+The service owns write commits and rollbacks.
+The dependency owns session cleanup.
+
+### 5. Response schemas
+
+UserResponse controls the fields returned by the API.
+The password_hash field must never appear in API responses.
+
+### 6. Important commands
+
+Run the application:
+
+    uv run uvicorn app.main:app --reload
+
+Check Alembic:
+
+    uv run alembic current
+
+Run existing tests:
+
+    uv run pytest -q
+
+### 7. Scope boundary
+
+Public registration and password hashing belong to T030.
+Authentication and protected routes belong to later authentication tasks.
