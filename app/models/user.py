@@ -12,9 +12,10 @@ from sqlalchemy import (
     Uuid,
     func,
 )
-from sqlalchemy.orm import Mapped, mapped_column, validates
+from sqlalchemy.orm import Mapped, mapped_column, relationship, validates
 
 from app.db.base import Base
+from app.models.workspace import Workspace, WorkspaceMembership
 
 # TERMS EXPLANATION:
 #
@@ -75,6 +76,17 @@ class User(Base):
         nullable=False,
         server_default=func.now(),
         onupdate=func.now(),
+    )
+
+    created_workspaces: Mapped[list["Workspace"]] = relationship(
+        "Workspace", back_populates="creator"
+    )
+
+    workspace_memberships: Mapped[list["WorkspaceMembership"]] = relationship(
+        "WorkspaceMembership",
+        back_populates="user",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
     )
 
     @validates("email")
