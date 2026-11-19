@@ -15,6 +15,7 @@ from sqlalchemy import (
 from sqlalchemy.orm import Mapped, mapped_column, relationship, validates
 
 from app.db.base import Base
+from app.models.project import Project
 from app.models.workspace import Workspace, WorkspaceMembership
 
 # TERMS EXPLANATION:
@@ -34,7 +35,6 @@ from app.models.workspace import Workspace, WorkspaceMembership
 #       This is a SQLAlchemy validation decorator.
 #       It tells SQLAlchemy:
 #       "Whenever someone assigns a new value to the email attribute of this model, execute the function below."
-
 
 class User(Base):
     """Database representation of an application user."""
@@ -87,6 +87,11 @@ class User(Base):
         back_populates="user",
         cascade="all, delete-orphan",
         passive_deletes=True,
+    )
+    
+    created_projects: Mapped[list["Project"]] = relationship(
+        "Project",
+        back_populates="creator",
     )
 
     @validates("email")

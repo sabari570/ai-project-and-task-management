@@ -18,6 +18,29 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship, validates
 
 from app.db.base import Base
 
+# SYNTAX EXPLANATION:
+
+#   creator: Mapped["User"] = relationship(
+#      "User",
+#      back_populates="created_workspaces",
+#  ) =>
+#           What does it mean?
+#           - creator: This is the attribute name you use in Python.
+#           - Mapped["User"]: This attribute represents a User object.
+#           - relationship("User"): Connects this model to the User model.
+#           - back_populates="created_workspaces": Creates a two-way relationship. The User model should have a corresponding attribute called created_workspaces.
+# 
+# memberships: Mapped[list["WorkspaceMembership"]] = relationship(
+#     back_populates="workspace",
+#     cascade="all, delete-orphan",
+#     passive_deletes=True,
+# ) =>
+#           What does it mean?
+#           - memberships: Attribute name used to access memberships belonging to a workspace.
+#           - Mapped[list["WorkspaceMembership"]]: This workspace can have multiple WorkspaceMembership records, so the result is a list.
+#           - back_populates="workspace": The WorkspaceMembership model has a corresponding workspace attribute that points back to this workspace.
+#           - cascade="all, delete-orphan": When a workspace is deleted, its related membership records are also deleted. If a membership is removed from the workspace's membership list, SQLAlchemy deletes that membership record from the database.
+#           - passive_deletes=True: SQLAlchemy relies on the database's ON DELETE CASCADE behavior for deleting related memberships, rather than loading all memberships itself before deleting the workspace.
 
 class Workspace(Base):
     """Database representation of a workspace."""
@@ -74,6 +97,13 @@ class Workspace(Base):
     )
 
     memberships: Mapped[list["WorkspaceMembership"]] = relationship(
+        back_populates="workspace",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )
+    
+    projects: Mapped[list["Project"]] = relationship(  # noqa: F821
+        "Project",
         back_populates="workspace",
         cascade="all, delete-orphan",
         passive_deletes=True,
