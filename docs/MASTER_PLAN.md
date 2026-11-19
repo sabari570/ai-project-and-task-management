@@ -1175,8 +1175,7 @@ Depends on: T023.\
 Acceptance: self-dependency is rejected; duplicate edge prevented; cycle
 validation tested.
 
-**T025 --- Remaining schema: invitations, attachments, notifications,
-activity**\
+**T025 --- Remaining schema: invitations, attachments, notifications, activity**\
 Depends on: T023.\
 Acceptance: constraints and deletion policies documented; migration
 applies on clean DB; model relationship tests pass.

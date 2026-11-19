@@ -108,6 +108,12 @@ class User(Base):
         foreign_keys="Task.assignee_id",
         passive_deletes=True,
     )
+    
+    authored_comments: Mapped[list["Comment"]] = relationship(  # noqa: F821
+        "Comment",
+        back_populates="author",
+        passive_deletes="all",
+    )
 
     @validates("email")
     def normalize_email(self, key: str, value: str) -> str:

@@ -17,6 +17,8 @@ from sqlalchemy import (
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
+from app.models.comment import Comment
+from app.models.label import Label, task_labels
 
 # SYNTAX EXPLANATION:
     
@@ -229,4 +231,17 @@ class Task(Base):
         "User",
         back_populates="assigned_tasks",
         foreign_keys=[assignee_id],
+    )
+    
+    comments: Mapped[list["Comment"]] = relationship(
+        "Comment",
+        back_populates="task",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )
+
+    labels: Mapped[list["Label"]] = relationship(
+        "Label",
+        secondary=task_labels,
+        back_populates="tasks",
     )

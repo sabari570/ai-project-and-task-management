@@ -108,6 +108,13 @@ class Workspace(Base):
         cascade="all, delete-orphan",
         passive_deletes=True,
     )
+    
+    labels: Mapped[list["Label"]] = relationship(  # noqa: F821
+        "Label",
+        back_populates="workspace",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )
 
     @validates("slug")
     def normalize_slug(self, key: str, value: str) -> str:

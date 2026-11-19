@@ -1,5 +1,15 @@
 """Centralized schema exports."""
 
+from app.schemas.comment import (
+    CommentCreate,
+    CommentRead,
+    CommentUpdate,
+)
+from app.schemas.label import (
+    LabelCreate,
+    LabelRead,
+    LabelUpdate,
+)
 from app.schemas.project import (
     ProjectCreate,
     ProjectResponse,
@@ -18,6 +28,12 @@ from app.schemas.workspace import (
 )
 
 __all__ = [
+    "CommentCreate",
+    "CommentRead",
+    "CommentUpdate",
+    "LabelCreate",
+    "LabelRead",
+    "LabelUpdate",
     "ProjectCreate",
     "ProjectResponse",
     "ProjectStatus",
