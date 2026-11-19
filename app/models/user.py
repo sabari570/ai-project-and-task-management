@@ -16,6 +16,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship, validates
 
 from app.db.base import Base
 from app.models.project import Project
+from app.models.task import Task
 from app.models.workspace import Workspace, WorkspaceMembership
 
 # TERMS EXPLANATION:
@@ -92,6 +93,20 @@ class User(Base):
     created_projects: Mapped[list["Project"]] = relationship(
         "Project",
         back_populates="creator",
+    )
+    
+    created_tasks: Mapped[list["Task"]] = relationship(
+        "Task",
+        back_populates="creator",
+        foreign_keys="Task.creator_id",
+        passive_deletes="all",
+    )
+
+    assigned_tasks: Mapped[list["Task"]] = relationship(
+        "Task",
+        back_populates="assignee",
+        foreign_keys="Task.assignee_id",
+        passive_deletes=True,
     )
 
     @validates("email")

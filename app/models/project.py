@@ -105,3 +105,10 @@ class Project(Base):
         "User",
         back_populates="created_projects",
     )
+    
+    tasks: Mapped[list["Task"]] = relationship(  # noqa: F821
+        "Task",
+        back_populates="project",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )

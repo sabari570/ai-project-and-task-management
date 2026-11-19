@@ -7,7 +7,7 @@ from sqlalchemy import pool
 from alembic import context
 from app.db.base import Base
 from app.db.session import SQLALCHEMY_DATABASE_URL, engine
-from app.models import Project, User, Workspace, WorkspaceMembership  # noqa: F401
+from app.models import Project, Task, User, Workspace, WorkspaceMembership  # noqa: F401
 
 # Alembic configuration object.
 config = context.config
