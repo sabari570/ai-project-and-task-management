@@ -19,6 +19,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.db.base import Base
 from app.models.comment import Comment
 from app.models.label import Label, task_labels
+from app.models.task_dependency import TaskDependency
 
 # SYNTAX EXPLANATION:
     
@@ -244,4 +245,26 @@ class Task(Base):
         "Label",
         secondary=task_labels,
         back_populates="tasks",
+    )
+    
+    
+    # Ok so here what it means is, this gives the list of all those tasks that are dependent on this task.
+    # like if a task with id ccc, and it is present in the task_dependency table as task_id, then this will give the list of all those tasks that are dependent on the task
+    # with id ccc.
+    dependency_links: Mapped[list["TaskDependency"]] = relationship(
+        "TaskDependency",
+        back_populates="task",
+        foreign_keys="TaskDependency.task_id",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )
+
+    # Ok so here what it means is, this gives the list of all those tasks that this task task depends on.
+    # suppose we have a task with id ccc, and it is present in the task_dependency table as depends_on_task_id, then this will give the list of all those tasks that this task
+    # depends on. like if task with id ccc depends on task with id bbb, and ddd then we can list those tasks from this relation.
+    prerequisite_links: Mapped[list["TaskDependency"]] = relationship(
+        "TaskDependency",
+        back_populates="depends_on_task",
+        foreign_keys="TaskDependency.depends_on_task_id",
+        passive_deletes=True,
     )
