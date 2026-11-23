@@ -203,7 +203,7 @@ class Task(Base):
     )
 
     # Many tasks belong to one project.
-    project: Mapped["Project"] = relationship(  # noqa: F821
+    project: Mapped["Project"] = relationship(  # noqa: F821  # pyright: ignore[reportUndefinedVariable]
         "Project",
         back_populates="tasks",
     )
@@ -221,14 +221,14 @@ class Task(Base):
     )
 
     # The user who created this task.
-    creator: Mapped["User"] = relationship(  # noqa: F821
+    creator: Mapped["User"] = relationship(  # noqa: F821  # pyright: ignore[reportUndefinedVariable]
         "User",
         back_populates="created_tasks",
         foreign_keys=[creator_id],
     )
 
     # The user assigned to this task, if any.
-    assignee: Mapped["User | None"] = relationship(  # noqa: F821
+    assignee: Mapped["User | None"] = relationship(  # noqa: F821  # pyright: ignore[reportUndefinedVariable]
         "User",
         back_populates="assigned_tasks",
         foreign_keys=[assignee_id],
@@ -266,5 +266,12 @@ class Task(Base):
         "TaskDependency",
         back_populates="depends_on_task",
         foreign_keys="TaskDependency.depends_on_task_id",
+        passive_deletes=True,
+    )
+    
+    attachments: Mapped[list["Attachment"]] = relationship(  # noqa: F821  # pyright: ignore[reportUndefinedVariable]
+        "Attachment",
+        back_populates="task",
+        cascade="all, delete-orphan",
         passive_deletes=True,
     )

@@ -67,12 +67,12 @@ class Comment(Base):
         nullable=True,
     )
 
-    task: Mapped["Task"] = relationship(  # noqa: F821
+    task: Mapped["Task"] = relationship(  # noqa: F821  # pyright: ignore[reportUndefinedVariable]
         "Task",
         back_populates="comments",
     )
 
-    author: Mapped["User"] = relationship(  # noqa: F821
+    author: Mapped["User"] = relationship(  # noqa: F821  # pyright: ignore[reportUndefinedVariable]
         "User",
         back_populates="authored_comments",
     )

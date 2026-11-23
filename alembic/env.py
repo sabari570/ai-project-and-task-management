@@ -8,13 +8,17 @@ from alembic import context
 from app.db.base import Base
 from app.db.session import SQLALCHEMY_DATABASE_URL, engine
 from app.models import (  # noqa: F401
+    ActivityLog,
+    Attachment,
     Comment,
     Label,
+    Notification,
     Project,
     Task,
     TaskDependency,
     User,
     Workspace,
+    WorkspaceInvitation,
     WorkspaceMembership,
 )
 

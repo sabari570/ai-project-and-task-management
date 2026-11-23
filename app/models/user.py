@@ -109,10 +109,38 @@ class User(Base):
         passive_deletes=True,
     )
     
-    authored_comments: Mapped[list["Comment"]] = relationship(  # noqa: F821
+    authored_comments: Mapped[list["Comment"]] = relationship(  # noqa: F821  # pyright: ignore[reportUndefinedVariable]
         "Comment",
         back_populates="author",
         passive_deletes="all",
+    )
+    
+    sent_workspace_invitations: Mapped[list["WorkspaceInvitation"]] = relationship(  # noqa: F821  # pyright: ignore[reportUndefinedVariable]
+        "WorkspaceInvitation",
+        back_populates="inviter",
+        foreign_keys="WorkspaceInvitation.invited_by",
+        passive_deletes="all",
+    )
+
+    uploaded_attachments: Mapped[list["Attachment"]] = relationship(  # noqa: F821  # pyright: ignore[reportUndefinedVariable]
+        "Attachment",
+        back_populates="uploader",
+        foreign_keys="Attachment.uploaded_by",
+        passive_deletes="all",
+    )
+
+    notifications: Mapped[list["Notification"]] = relationship(  # pyright: ignore[reportUndefinedVariable]
+        "Notification",
+        back_populates="recipient",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )
+
+    activity_logs: Mapped[list["ActivityLog"]] = relationship(  # noqa: F821  # pyright: ignore[reportUndefinedVariable]
+        "ActivityLog",
+        back_populates="actor",
+        foreign_keys="ActivityLog.actor_id",
+        passive_deletes=True,
     )
 
     @validates("email")

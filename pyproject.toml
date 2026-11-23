@@ -32,3 +32,8 @@ include = ["app*"]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
 addopts = "-ra"
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+pythonVersion = "3.12"

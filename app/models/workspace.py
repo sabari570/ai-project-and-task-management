@@ -91,7 +91,7 @@ class Workspace(Base):
         onupdate=func.now(),
     )
 
-    creator: Mapped["User"] = relationship(  # noqa: F821
+    creator: Mapped["User"] = relationship(  # noqa: F821  # pyright: ignore[reportUndefinedVariable]
         "User",
         back_populates="created_workspaces",
     )
@@ -102,14 +102,14 @@ class Workspace(Base):
         passive_deletes=True,
     )
     
-    projects: Mapped[list["Project"]] = relationship(  # noqa: F821
+    projects: Mapped[list["Project"]] = relationship(  # noqa: F821  # pyright: ignore[reportUndefinedVariable]
         "Project",
         back_populates="workspace",
         cascade="all, delete-orphan",
         passive_deletes=True,
     )
     
-    labels: Mapped[list["Label"]] = relationship(  # noqa: F821
+    labels: Mapped[list["Label"]] = relationship(  # noqa: F821  # pyright: ignore[reportUndefinedVariable]
         "Label",
         back_populates="workspace",
         cascade="all, delete-orphan",
@@ -174,8 +174,28 @@ class WorkspaceMembership(Base):
         back_populates="memberships",
     )
 
-    user: Mapped["User"] = relationship(  # noqa: F821
+    user: Mapped["User"] = relationship(  # noqa: F821  # pyright: ignore[reportUndefinedVariable]
         back_populates="workspace_memberships",
+    )
+    
+    invitations: Mapped[list["WorkspaceInvitation"]] = relationship(  # noqa: F821  # pyright: ignore[reportUndefinedVariable]
+        "WorkspaceInvitation",
+        back_populates="workspace",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )
+
+    activity_logs: Mapped[list["ActivityLog"]] = relationship(  # noqa: F821  # pyright: ignore[reportUndefinedVariable]
+        "ActivityLog",
+        back_populates="workspace",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )
+
+    notifications: Mapped[list["Notification"]] = relationship(  # noqa: F821  # pyright: ignore[reportUndefinedVariable]
+        "Notification",
+        back_populates="workspace",
+        passive_deletes=True,
     )
 
     @validates("role")
