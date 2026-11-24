@@ -1,0 +1,15 @@
+export const USER_ALICE = '11111111-1111-4111-8111-111111111101'
+export const USER_BOB = '11111111-1111-4111-8111-111111111102'
+export const USER_CARA = '11111111-1111-4111-8111-111111111103'
+
+export const WS_ACME = '22222222-2222-4222-8222-222222222201'
+export const WS_DESIGN = '22222222-2222-4222-8222-222222222202'
+
+export const PRJ_LAUNCH = '33333333-3333-4333-8333-333333333301'
+export const PRJ_MOBILE = '33333333-3333-4333-8333-333333333302'
+export const PRJ_REBRAND = '33333333-3333-4333-8333-333333333303'
+export const PRJ_PROTOTYPE = '33333333-3333-4333-8333-333333333304'
+
+export const AI_CONV_1 = 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaa0001'
+export const DOC_1 = 'dddddddd-dddd-4ddd-8ddd-dddddddddd01'
+export const DOC_2 = 'dddddddd-dddd-4ddd-8ddd-dddddddddd02'
