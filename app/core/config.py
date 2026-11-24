@@ -52,7 +52,7 @@ class Settings(BaseSettings):
 @lru_cache
 def get_settings() -> Settings:
     "create settings once and reuse them across the application"
-    return Settings()
+    return Settings()  # pyright: ignore[reportCallIssue]
 
 
 settings = get_settings()

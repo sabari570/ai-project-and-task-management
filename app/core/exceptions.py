@@ -62,7 +62,7 @@ def register_exception_handlers(app: FastAPI) -> None:
             for error in exc.errors()
         ]
 
-        return error_response(status_code=422, code="VALIDATION_ERROR", details=details)
+        return error_response(status_code=422, code="VALIDATION_ERROR", details=details)  # pyright: ignore[reportCallIssue]
     
     @app.exception_handler(Exception)
     async def handle_unexpected_exception(

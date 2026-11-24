@@ -35,7 +35,7 @@ class UserCreate(APIModel):
     """Validated input for creating a user."""
 
     email: EmailStr
-    password: SecretStr
+    password: SecretStr = Field(min_length=8, max_length=128)
     display_name: str = Field(min_length=1, max_length=120)
 
     @field_validator("email", mode="before")

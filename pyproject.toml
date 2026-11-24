@@ -17,6 +17,7 @@ dependencies = [
     "SQLAlchemy>=2.0,<3.0",
     "email-validator>=2.0,<3.0",
     "alembic>=1.13,<2.0",
+    "pwdlib[argon2]>=0.2.1,<1.0",
 ]
 
 [project.optional-dependencies]
