@@ -116,6 +116,26 @@ class Workspace(Base):
         passive_deletes=True,
     )
 
+    invitations: Mapped[list["WorkspaceInvitation"]] = relationship(  # noqa: F821  # pyright: ignore[reportUndefinedVariable]
+        "WorkspaceInvitation",
+        back_populates="workspace",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )
+
+    activity_logs: Mapped[list["ActivityLog"]] = relationship(  # noqa: F821  # pyright: ignore[reportUndefinedVariable]
+        "ActivityLog",
+        back_populates="workspace",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )
+
+    notifications: Mapped[list["Notification"]] = relationship(  # noqa: F821  # pyright: ignore[reportUndefinedVariable]
+        "Notification",
+        back_populates="workspace",
+        passive_deletes=True,
+    )
+
     @validates("slug")
     def normalize_slug(self, key: str, value: str) -> str:
         """Normalize slug values."""
@@ -176,26 +196,6 @@ class WorkspaceMembership(Base):
 
     user: Mapped["User"] = relationship(  # noqa: F821  # pyright: ignore[reportUndefinedVariable]
         back_populates="workspace_memberships",
-    )
-    
-    invitations: Mapped[list["WorkspaceInvitation"]] = relationship(  # noqa: F821  # pyright: ignore[reportUndefinedVariable]
-        "WorkspaceInvitation",
-        back_populates="workspace",
-        cascade="all, delete-orphan",
-        passive_deletes=True,
-    )
-
-    activity_logs: Mapped[list["ActivityLog"]] = relationship(  # noqa: F821  # pyright: ignore[reportUndefinedVariable]
-        "ActivityLog",
-        back_populates="workspace",
-        cascade="all, delete-orphan",
-        passive_deletes=True,
-    )
-
-    notifications: Mapped[list["Notification"]] = relationship(  # noqa: F821  # pyright: ignore[reportUndefinedVariable]
-        "Notification",
-        back_populates="workspace",
-        passive_deletes=True,
     )
 
     @validates("role")
